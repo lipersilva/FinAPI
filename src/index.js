@@ -12,28 +12,28 @@ const customers = [];
  * name - string
  * id - uuid 
  * statement - []
-//  */
-// app.post("/account", (request, response) => {
-//   const { cpf, name } = request.body;
-//   const customerAlreadyExists = customers.some( //comparacao dos valores
-//     (customer) => customer.cpf === cpf
-//   );
+*/
+app.post("/account", (request, response) => {
+  const { cpf, name } = request.body;
+  const customerAlreadyExists = customers.some( //comparacao dos valores
+    (customer) => customer.cpf === cpf
+  );
 
-//   if(customerAlreadyExists) {
-//     return response.status(400).json({error: "Customer already existis! "}); //400 utilizado para erros
-//   }
+  if(customerAlreadyExists) {
+    return response.status(400).json({error: "Customer already existis! "}); //400 utilizado para erros
+  }
   
 
-//   customers.push({
-//     cpf,
-//     name,
-//     id: uuidv4(),
-//     statement: []
-//   });
+  customers.push({
+    cpf,
+    name,
+    id: uuidv4(),
+    statement: []
+  });
 
-//   return response.status(201).send(); //201 utilizado para quando um dado é criado
+  return response.status(201).send(); //201 utilizado para quando um dado é criado
   
-// });
+});
 
 app.listen(3333);
 
