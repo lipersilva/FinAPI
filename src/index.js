@@ -13,9 +13,11 @@ const customers = [];
  * id - uuid 
  * statement - []
 */
+// - [x] Deve ser possível criar uma conta
+// - [x] Não deve ser possível cadastrar uma conta com CPF já existente
 app.post("/account", (request, response) => {
   const { cpf, name } = request.body;
-  const customerAlreadyExists = customers.some( //comparacao dos valores
+  const customerAlreadyExists = customers.some( //comparacao dos valores (retornar true/false)
     (customer) => customer.cpf === cpf
   );
 
@@ -33,6 +35,21 @@ app.post("/account", (request, response) => {
 
   return response.status(201).send(); //201 utilizado para quando um dado é criado
   
+});
+
+// - [x] Deve ser possível buscar o extrato bancário do cliente
+
+app.get("/statement", (request, response) => {
+  const { cpf } = request.headers;
+  
+  // - [x] Não deve ser possível buscar extrato em uma conta não existente
+  const customer = customers.find(customer => customer.cpf === cpf);
+
+  if(!customer) {
+    return response.status(400).json({error: "Customer not found"});
+  }
+
+  return response.json(customer.statement);
 });
 
 app.listen(3333);
